@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Slider</title>
+	<!-- Latest compiled and minified CSS -->
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+	<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script> 
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<link rel="stylesheet" href="http://static.zinoui.com/1.4.2/themes/silver/zino.core.css">
+<link rel="stylesheet" href="http://static.zinoui.com/1.4.2/themes/silver/zino.resizable.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="http://static.zinoui.com/1.4.2/compiled/zino.position.min.js"></script>
+ <script src="http://static.zinoui.com/1.4.2/compiled/zino.resizable.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+<div class="row">
+	<div class="col-md-5"></div>
+	<div class="col-md-2">
+			<div class="page header">
+				<h1>Slider</h1>
+			</div>	
+	</div>
+	<div class="col-md-5"></div>
+</div>		
+
+
+
+<div class="row">
+	<div class="col-md-12">	
+		<div id="sortable1" class="connectedSortable slider"> 
+		</div> 
+	</div>
+</div>
+
+
+
+<div class="row">
+	<div class="col-md-5"></div>
+	<div class="col-md-2"></div>
+	<div class="col-md-5"></div>	
+</div>	
+
+
+
+<div class="row string_slider">
+	<div class="col-md-12">
+	<ul id="sortable2" class="connectedSortable">
+	</ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-1 col-md-offset-2">
+		<div class="line">
+		</div>	
+	</div>
+	<div class="col-md-1">
+		<div class="line">
+		</div>	
+	</div>
+	<div class="col-md-1">
+		<div class="line">
+		</div>	
+	</div>
+	<div class="col-md-1">
+		<div class="line">
+		</div>	
+	</div>
+	<div class="col-md-1">
+		<div class="line">
+		</div>	
+	</div>
+	<div class="col-md-1">
+		<div class="line">
+		</div>	
+	</div>
+	<div class="col-md-1">
+		<div class="line">
+		</div>	
+	</div>
+	<div class="col-md-1">
+		<div class="line">
+		</div>	
+	</div>
+	<div class="col-md-1">
+		<div class="line">
+		</div>	
+	</div>
+	<div class="col-md-1">
+		<div class="line">
+		</div>	
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-1 col-md-offset-2 first">
+		<h5>4.18</h5>	
+	</div>
+	<div class="col-md-1 dyn_fld">
+		<h5>7.05</h5>	
+	</div>
+	<div class="col-md-1 dyn_fld">
+		<h5>9.93</h5>	
+	</div>
+	<div class="col-md-1 dyn_fld">
+		<h5>12.8</h5>	
+	</div>
+	<div class="col-md-1 dyn_fld">
+		<h5>15.68</h5>	
+	</div>
+	<div class="col-md-1 dyn_fld">
+		<h5>18.55</h5>	
+	</div>
+	<div class="col-md-1 dyn_fld">
+		<h5>21.43</h5>	
+	</div>
+	<div class="col-md-1 dyn_fld">
+		<h5>24.3</h5>	
+	</div>
+	<div class="col-md-1 dyn_fld">
+		<h5>27.18</h5>	
+	</div>
+	<div class="col-md-1 dyn_fld">
+		<h5>30.05</h5>	
+	</div>
+
+</div>	
+
+<div class="row">
+	<div class="col-md-5"></div>
+	<div class="col-md-2">
+		<button class="btn btn-primary btn-lg slider-play" data-toggle="modal" data-target="#slider-modal">
+        Play
+      </button>
+	</div>
+	<div class="col-md-5"></div>
+</div>		
+
+<div class="modal fade" id="slider-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+       <div class="modal-body modal-secundus">
+       		<img>
+       </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+$(document).ready(function(){
+	$.getJSON("/test.json")
+	.done(function(data){
+		var count=0;
+		$.each(data.items, function(){
+			count+=1;
+			$("<img>").attr("src", this.src).attr("class", "image").appendTo(".images");
+			$("<div>").attr("class", "ui-state-default").attr("data-toggle", "toggle").attr("data-placement","top").attr("title","").append($("<img>").attr("src", this.src).attr("class", "slider-image").data("interval",this.interval)).appendTo(".slider");
+		});
+
+
+		$(".slider-image").dblclick(function()
+		{
+			$(".modal-secundus > img").attr("src",$(this).attr("src"));
+			$(".modal-secundus > img").load(function(){
+				$(".modal-dialog").css("width",this.naturalWidth + 30);
+				$('#slider-modal').modal();
+			})
+		});
+
+
+
+		$( "#sortable1, #sortable2" ).sortable({
+   			connectWith: ".connectedSortable"
+		});
+
+var real_width = $(window).width();
+var slider_width = 0.9*real_width;
+var new_size=0;
+var new_time;
+var for_res;
+var col_width = real_width/12;
+var col_time = col_width*0.025;
+var margin_width = real_width*0.04*0.025;
+var first= col_time*2 - margin_width;
+first=parseFloat(first);
+first=first.toFixed(2);
+col_time=parseFloat(col_time);
+col_time=col_time.toFixed(2);
+$(".first").html(first);
+$('.dyn_fld').each(function()
+{
+
+	col_time=parseFloat(col_time);
+	first=parseFloat(first);
+	first=first+col_time;
+	first=first.toFixed(2);
+	$(this).html(first);
+});
+
+
+
+$("#sortable1 > div").zinoResizable({
+	maxHeight: 102,
+	maxWidth: slider_width/count,
+	minHeight: 102,
+	minWidth: 120,
+	resize: function(event, ui)
+		{
+			$(this).css("left",0);
+		},
+	end: function(event, ui)
+	{
+		//debugger
+		new_size = $(this).width();
+		new_time=new_size*25;
+		for_res=new_time/1000;
+		for_res=for_res+" s"
+		$('img', this).data("interval",new_time);
+
+		$(this).attr("title",for_res);
+		$(this).attr("data-original-title",for_res);
+		$(this).tooltip('show');
+
+		
+	}
+
+	});
+
+$(".slider-play").click(function()
+		{
+			var temp=0;
+			
+			$("#sortable2 img").each(function()	
+			{
+				var that = $(this);
+				setTimeout(function(){
+					$(".modal-secundus > img").attr("src",that.attr("src"));
+					$(".modal-secundus > img").load(function(){
+						$(".modal-dialog").css("width", this.naturalWidth + 30);
+					})
+				},temp);
+				temp += $(this).data("interval");
+				
+			});
+		});
+
+			
+		$('#slider-modal').on('hidden.bs.modal', function (e) {
+ 			$(".modal-secundus > img").attr("src","");
+		});
+	});
+});
+</script>
+</body>
+</html>
